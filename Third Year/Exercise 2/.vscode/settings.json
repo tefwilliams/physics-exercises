@@ -1,0 +1,10 @@
+{
+  "terminal.integrated.fontFamily": "Cascadia Code PL",
+  "python.pythonPath": "C:/Users/tefwi/OneDrive/Documents/Python Repos/physics exercises/Third Year/Exercise 2/.venv/Scripts/python.exe",
+  "python.languageServer": "Pylance",
+  "python.analysis.typeCheckingMode": "basic",
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+  "python.formatting.provider": "none"
+}

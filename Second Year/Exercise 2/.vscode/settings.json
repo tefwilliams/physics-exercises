@@ -1,0 +1,10 @@
+{
+  "terminal.integrated.fontFamily": "Cascadia Code PL",
+  "python.pythonPath": "C:\\Users\\tefwi\\.conda\\envs\\physics excercises\\python.exe",
+  "python.languageServer": "Pylance",
+  "python.analysis.typeCheckingMode": "basic",
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+  "python.formatting.provider": "none"
+}
