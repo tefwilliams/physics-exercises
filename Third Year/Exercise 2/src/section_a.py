@@ -3,7 +3,9 @@ from matplotlib import pyplot as plt
 from matplotlib import animation
 import time
 
-from equations import jacobi, get_electric_field, create_capacitor
+from numba import njit
+
+from equations import gauss_seidel, jacobi, get_electric_field, create_capacitor
 
 
 def is_almost_same(field1, field2):
@@ -51,14 +53,9 @@ def relax_laplace(potential_field, iterative_method, h):
             old_potential_field, np.zeros_like(potential_field), h
         )
 
-        height, width = potential_field.shape
-        for row in range(height):
-            for col in range(width):
-                initial_value = potential_field[row, col]
-
-                if initial_value != 0:
-                    new_potential_field[row, col] = initial_value
-
+        new_potential_field = reset_fixed_potentials(
+            potential_field, new_potential_field
+        )
         potential_field_record.append(new_potential_field)
 
         if is_almost_same(new_potential_field, old_potential_field):
@@ -68,12 +65,27 @@ def relax_laplace(potential_field, iterative_method, h):
     return potential_field_record
 
 
+@njit
+def reset_fixed_potentials(fixed_potential_field, potential_field):
+    updated_field = potential_field.copy()
+    height, width = fixed_potential_field.shape
+
+    for row in range(height):
+        for col in range(width):
+            initial_value = fixed_potential_field[row, col]
+
+            if initial_value != 0:
+                updated_field[row, col] = initial_value
+
+    return updated_field
+
+
 # Sets initial charge field and runs sim
 
 charge_field = create_capacitor((100, 60), 80, 20)
 
 start = time.time()
-potential_record = relax_laplace(charge_field, jacobi, 0.01)
+potential_record = relax_laplace(charge_field, gauss_seidel, 0.01)
 end = time.time()
 print(f"\n'relax' took {(end - start):.4g}s to run")
 

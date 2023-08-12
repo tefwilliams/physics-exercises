@@ -1,5 +1,5 @@
 import numpy as np
-from numba import njit, jit
+from numba import njit
 
 
 def get_electric_field(field, h):
