@@ -3,7 +3,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 from scipy import integrate
 
-from input_helpers import get_function, input_float, input_positive_int
+from input_helpers import get_1d_function, input_float, input_positive_int
 from integration import simpson_integrate
 
 
@@ -43,7 +43,7 @@ Enter a function for which the convergence of Simpson's rule will be tested, wit
 
             case _:
                 try:
-                    function = get_function(choice)
+                    function = get_1d_function(choice)
 
                     x = np.arange(2, number_of_steps + 1, 2)
                     f = np.vectorize(

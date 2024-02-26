@@ -2,15 +2,15 @@ import numpy as np
 from numba import njit
 
 
-def get_electric_field(field, h):
+def get_electric_field(potential_field):
     """
     Calculates the magnitude of the electric field at each point on the grid
     """
-    return -laplacian(field, h)
+    return np.gradient(potential_field)
 
 
 @njit
-def laplacian(field, h):
+def laplacian(field):
     height, width = field.shape
     laplacian = np.zeros(field.shape)
 
@@ -28,7 +28,7 @@ def laplacian(field, h):
                 x_component += field[row, col + 1] - field[row, col]
 
             laplacian[row, col] = (
-                (y_component / (2 * h)) ** 2 + (x_component / (2 * h)) ** 2
+                (y_component / 2) ** 2 + (x_component / 2) ** 2
             ) ** 0.5
 
     return laplacian
@@ -47,7 +47,7 @@ def create_capacitor(
     plates_start_col = (width - plate_separation) // 2
 
     left_plate = (
-        range(plates_start_row, plates_start_row + plate_length),
+        range(plates_start_row + 30, plates_start_row + plate_length - 30),
         plates_start_col,
     )
     right_plate = (
@@ -62,7 +62,7 @@ def create_capacitor(
 
 
 @njit
-def jacobi(field, charge, h):
+def jacobi(field, charge):
     """
     Runs the Jacobi method for a grid
     """
@@ -73,14 +73,14 @@ def jacobi(field, charge, h):
     for row in range(height):
         for col in range(width):
             new_field[row, col] = (
-                average_surrounding_values(field, row, col) + charge[row, col] * h**2
+                average_surrounding_values(field, row, col) + charge[row, col]
             )
 
     return new_field
 
 
 @njit
-def gauss_seidel(field, charge, h):
+def gauss_seidel(field, charge):
     """
     Runs the Gauss-Seidel method for a grid
     """
@@ -91,8 +91,7 @@ def gauss_seidel(field, charge, h):
     for row in range(height):
         for col in range(width):
             new_field[row, col] = (
-                average_surrounding_values(new_field, row, col)
-                + charge[row, col] * h**2
+                average_surrounding_values(new_field, row, col) + charge[row, col]
             )
 
     return new_field

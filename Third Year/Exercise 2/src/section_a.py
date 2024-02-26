@@ -20,7 +20,7 @@ def is_almost_same(field1, field2):
     )
 
 
-def relax_poisson(charge_field, iterative_method, h):
+def relax_poisson(charge_field, iterative_method):
     """
     Uses finite-difference to 'relax' into a solution to Laplace's or Poisson's equation
     """
@@ -29,7 +29,7 @@ def relax_poisson(charge_field, iterative_method, h):
 
     for i in range(number_of_iterations):
         old_potential_field = potential_field_record[-1]
-        new_potential_field = iterative_method(old_potential_field, charge_field, h)
+        new_potential_field = iterative_method(old_potential_field, charge_field)
 
         potential_field_record.append(new_potential_field)
 
@@ -50,7 +50,7 @@ def relax_laplace(potential_field, iterative_method, h):
     for i in range(number_of_iterations):
         old_potential_field = potential_field_record[-1]
         new_potential_field = iterative_method(
-            old_potential_field, np.zeros_like(potential_field), h
+            old_potential_field, np.zeros_like(potential_field)
         )
 
         new_potential_field = reset_fixed_potentials(
@@ -85,36 +85,42 @@ def reset_fixed_potentials(fixed_potential_field, potential_field):
 charge_field = create_capacitor((100, 60), 80, 20)
 
 start = time.time()
-potential_record = relax_laplace(charge_field, gauss_seidel, 0.01)
+potential_record = relax_poisson(charge_field, gauss_seidel)
 end = time.time()
 print(f"\n'relax' took {(end - start):.4g}s to run")
 
 # Plots animation showing sim progression
 
-fig, (ax1, ax2) = plt.subplots(2)
+# fig, (ax1, ax2) = plt.subplots(2)
 
-electric_field_record = [get_electric_field(field, 0.01) for field in potential_record]
-ax1.imshow(potential_record[0])
-ax2.imshow(electric_field_record[0])
-
-
-def update(frame):
-    ax1.imshow(potential_record[frame])
-    ax2.imshow(electric_field_record[frame])
+# electric_field_record = [get_electric_field(field) for field in potential_record]
+# ax1.imshow(potential_record[0])
+# ax2.imshow(electric_field_record[0])
 
 
-ani = animation.FuncAnimation(fig, update, frames=range(0, len(potential_record), 5))
-plt.show()
+# def update(frame):
+#     ax1.imshow(potential_record[frame])
+#     ax2.imshow(electric_field_record[frame])
+
+
+# ani = animation.FuncAnimation(fig, update, frames=range(0, len(potential_record), 5))
+# plt.show()
 
 # Plots a figure of the latest potential
 
-# potential_field = potential_record[-1]
-# electric_field = get_electric_field(potential_field, 0.01)
+potential_field = potential_record[-1]
+e_y, e_x = get_electric_field(potential_field)
 
-# fig, ax = plt.subplots()
-# # ax.plot(potential_field[50])
-# # ax.plot(electric_field[50])
+fig, ax = plt.subplots()
+# ax.plot(potential_field[50])
 
-# # image = ax.imshow(potential_field)
-# image = ax.imshow(electric_field)
-# plt.show()
+field_strength = np.linalg.norm([e_y, e_x], axis=0)
+# ax.plot(field_strength[50])
+
+# image = ax.imshow(potential_field)
+
+image = ax.imshow(field_strength)
+image = ax.quiver(e_x, e_y)
+
+
+plt.show()

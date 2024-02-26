@@ -1,6 +1,6 @@
 from input_helpers import input_float, input_positive_int
 from integration import simpson_integrate
-from input_helpers import get_function
+from input_helpers import get_1d_function
 
 
 def run():
@@ -38,7 +38,10 @@ Enter a function to be intergrated with the following parameters:
             case _:
                 try:
                     integral_value = simpson_integrate(
-                        get_function(choice), lower_bound, upper_bound, number_of_steps
+                        get_1d_function(choice),
+                        lower_bound,
+                        upper_bound,
+                        number_of_steps,
                     )
 
                     print(
