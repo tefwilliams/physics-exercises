@@ -1,8 +1,6 @@
 import numpy as np
 from matplotlib import pyplot as plt
-
-from input_helpers import input_float, input_positive_int
-from integration import simpson_integrate
+from helpers import input_float, input_positive_int, simpson_integrate
 
 
 def run():
@@ -68,7 +66,7 @@ def run():
 
                 plt.imshow(
                     intensity,
-                    extent=[x_min * 1000, x_max * 1000, y_min * 1000, y_max * 1000],
+                    extent=(x_min * 1000, x_max * 1000, y_min * 1000, y_max * 1000),
                     cmap="jet",
                 )
                 plt.title("Intensity")
@@ -91,16 +89,12 @@ def run():
                     input_float("Enter a value for the slit width (in mm): ") * 10**-3
                 )
                 image_width = (
-                    input_float("Enter a value for the image width (in mm): ")
-                    * 10**-3
+                    input_float("Enter a value for the image width (in mm): ") * 10**-3
                 )
                 wavelength = (
                     input_float("Enter a value for the wavelength (in nm): ") * 10**-9
                 )
-                z = (
-                    input_float("Enter a value for the z coordinate (in mm): ")
-                    * 10**-3
-                )
+                z = input_float("Enter a value for the z coordinate (in mm): ") * 10**-3
                 number_of_points = input_positive_int(
                     "Enter a value for the number of steps: "
                 )

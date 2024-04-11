@@ -1,7 +1,5 @@
 import numpy as np
-
-from input_helpers import input_float, input_positive_int
-from integration import simpson_integrate
+from helpers import input_float, input_positive_int, simpson_integrate
 
 
 def run():
@@ -64,18 +62,9 @@ def run():
                 wavelength = (
                     input_float("Enter a value for the wavelength (in nm): ") * 10**-9
                 )
-                x = (
-                    input_float("Enter a value for the x coordinate (in mm): ")
-                    * 10**-3
-                )
-                y = (
-                    input_float("Enter a value for the y coordinate (in mm): ")
-                    * 10**-3
-                )
-                z = (
-                    input_float("Enter a value for the z coordinate (in mm): ")
-                    * 10**-3
-                )
+                x = input_float("Enter a value for the x coordinate (in mm): ") * 10**-3
+                y = input_float("Enter a value for the y coordinate (in mm): ") * 10**-3
+                z = input_float("Enter a value for the z coordinate (in mm): ") * 10**-3
                 number_of_steps = input_positive_int(
                     "Enter a value for the number of steps: "
                 )

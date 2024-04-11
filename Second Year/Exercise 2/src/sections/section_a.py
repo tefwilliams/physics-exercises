@@ -1,6 +1,4 @@
-from input_helpers import input_float, input_positive_int
-from integration import simpson_integrate
-from input_helpers import get_1d_function
+from helpers import input_float, input_positive_int, simpson_integrate, get_1d_function
 
 
 def run():
@@ -12,8 +10,8 @@ def run():
 
     while True:
         choice = input(
-            "\n"
-            + f"""Select one of the following options:
+            f"""
+Select one of the following options:
 Enter a function to be intergrated with the following parameters:
     lower bound: {lower_bound}
     upper bound: {upper_bound}
@@ -24,7 +22,7 @@ Enter a function to be intergrated with the following parameters:
 """
         )
 
-        print("\n" + f"You entered the choice: '{choice}'")
+        print(f"\nYou entered the choice: '{choice}'")
 
         match choice:
             case "m":
@@ -45,8 +43,7 @@ Enter a function to be intergrated with the following parameters:
                     )
 
                     print(
-                        "\n"
-                        + f"The integral of {choice} between {lower_bound} and {upper_bound} is: {integral_value:.3g}"
+                        f"\nThe integral of {choice} between {lower_bound} and {upper_bound} is: {integral_value:.3g}"
                     )
 
                 except ValueError as e:

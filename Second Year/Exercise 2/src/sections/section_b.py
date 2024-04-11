@@ -1,6 +1,4 @@
-from input_helpers import input_float, input_positive_int
-from integration import simpson_integrate
-from repository import mysin, mycos
+from helpers import input_float, input_positive_int, simpson_integrate, mysin, mycos
 
 
 def run():

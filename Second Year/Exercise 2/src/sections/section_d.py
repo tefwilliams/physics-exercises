@@ -1,10 +1,7 @@
-from typing import Callable
 import numpy as np
 from matplotlib import pyplot as plt
 from scipy import integrate
-
-from input_helpers import get_1d_function, input_float, input_positive_int
-from integration import simpson_integrate
+from helpers import get_1d_function, input_float, input_positive_int, simpson_integrate
 
 
 def run():

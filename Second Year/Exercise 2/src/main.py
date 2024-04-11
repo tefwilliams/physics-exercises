@@ -1,9 +1,11 @@
-import section_a
-import section_b
-import section_c
-import section_d
-import section_e
-import section_f
+from sections import (
+    run_section_a,
+    run_section_b,
+    run_section_c,
+    run_section_d,
+    run_section_e,
+    run_section_f,
+)
 
 while True:
     choice = input(
@@ -22,17 +24,17 @@ while True:
 
     match choice:
         case "a":
-            section_a.run()
+            run_section_a()
         case "b":
-            section_b.run()
+            run_section_b()
         case "c":
-            section_c.run()
+            run_section_c()
         case "d":
-            section_d.run()
+            run_section_d()
         case "e":
-            section_e.run()
+            run_section_e()
         case "f":
-            section_f.run()
+            run_section_f()
         case "q":
             print("\n" + "You have chosen to finish - goodbye.")
             break
