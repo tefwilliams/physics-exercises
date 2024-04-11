@@ -1,4 +1,4 @@
-from enum import StrEnum
+from enum import Enum
 from typing import Callable, Tuple
 
 
@@ -7,7 +7,7 @@ Method = Callable[
 ]
 
 
-class MethodString(StrEnum):
+class MethodString(str, Enum):
     EULER = "euler"
     MODIFIED_EULER = "modified euler"
     RUNGE_KUTTA = "runge kutta"
@@ -52,12 +52,12 @@ def iterate(
         height_record.append(new_height)
         time_record.append(time_record[-1] + time_step)
 
-    return (
-        acceleration_record,
-        velocity_record,
-        height_record,
-        time_record,
-    )
+    return {
+        "acceleration": acceleration_record,
+        "velocity": velocity_record,
+        "height": height_record,
+        "time": time_record,
+    }
 
 
 def euler(
