@@ -1,6 +1,6 @@
 from sections import (
     run_section_a,
-    # run_section_b,
+    run_section_b,
     # run_section_c,
     # run_section_d,
     # run_section_e,
@@ -25,8 +25,8 @@ while True:
     match choice:
         case "a":
             run_section_a()
-        # case "b":
-        #     run_section_b()
+        case "b":
+            run_section_b()
         # case "c":
         #     run_section_c()
         # case "d":

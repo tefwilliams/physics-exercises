@@ -1,8 +1,9 @@
 from matplotlib import pyplot as plt
 from matplotlib.axes import Axes
+from .methods import IterationData
 
 
-def plot_fall(data: dict[str, dict[str, list[float]]]):
+def plot_fall(data: dict[str, IterationData]):
     fig, axes = plt.subplots(3, 1, figsize=(8, 12), sharex=True)
     ax1: Axes = axes[0]
     ax2: Axes = axes[1]

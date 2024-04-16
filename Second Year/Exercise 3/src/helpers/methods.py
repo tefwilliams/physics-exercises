@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Callable, Tuple
+from typing import Callable, Tuple, TypedDict
 
 
 Method = Callable[
@@ -27,13 +27,24 @@ class MethodString(str, Enum):
                 raise ValueError(f"{self} is not a valid method")
 
 
+IterationData = TypedDict(
+    "IterationData",
+    {
+        "acceleration": list[float],
+        "velocity": list[float],
+        "height": list[float],
+        "time": list[float],
+    },
+)
+
+
 def iterate(
     initial_height: float,
     initial_velocity: float,
     acceleration: Callable[[float, float], float],
     method: Method,
     time_step: float,
-):
+) -> IterationData:
     acceleration_record = [acceleration(initial_velocity, initial_height)]
     velocity_record = [initial_velocity]
     height_record = [initial_height]

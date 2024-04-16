@@ -5,7 +5,7 @@ from helpers import (
     input_positive_float,
     plot_fall,
 )
-from methods import MethodString, iterate
+from helpers import MethodString, IterationData, iterate
 
 
 def run():

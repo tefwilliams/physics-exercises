@@ -1,8 +1,18 @@
 from matplotlib.axes import Axes
 import matplotlib.pyplot as plt
 import numpy as np
-from helpers import get_comma_separated_string
-from methods import MethodString, iterate
+from helpers import (
+    get_comma_separated_string,
+    input_positive_float,
+    input_float,
+    iterate,
+    MethodString,
+    IterationData,
+)
+
+gravitational_constant = -9.81
+mass = 100
+drag_coefficient = 0.6
 
 
 def run():
@@ -37,26 +47,37 @@ Select one of the following options:
         match choice:
             case "r":
 
+                data = {
+                    method.value: iterate(
+                        initial_height,
+                        initial_velocity,
+                        get_acceleration,
+                        method.to_method(),
+                        time_step,
+                    )
+                    for method in methods
+                }
+
+                time_steps = data[MethodString.EULER]["time"]
+
                 plot_differences(
+                    data,
                     {
-                        method: iterate(
-                            initial_height,
-                            initial_velocity,
-                            get_acceleration,
-                            method.to_method(),
-                            time_step,
-                        )
-                        for method in methods
-                    }
+                        "acceleration": get_analytical_acceleration(time_steps),
+                        "velocity": get_analytical_velocity(time_steps),
+                        "height": get_analytical_height(initial_height, time_steps),
+                        "time": time_steps,
+                    },
                 )
 
             case "m":
-                # lower_bound = input_float("Enter a value for the lower bound: ")
-                # upper_bound = input_float("Enter a value for the upper bound: ")
-                # number_of_steps = input_positive_int(
-                #     "Enter a value for the number of steps: "
-                # )
-                print("Hello")
+                initial_height = input_positive_float(
+                    "Enter a value for the initial height: "
+                )
+                initial_velocity = input_float(
+                    "Enter a value for the initial velocity: "
+                )
+                time_step = input_positive_float("Enter a value for the time step: ")
 
             case "q":
                 break
@@ -66,27 +87,23 @@ Select one of the following options:
 
 
 def plot_differences(
-    data: dict[str, dict[str, list[float]]],
-    true_data: dict[str, dict[str, list[float]]],
+    data: dict[str, IterationData],
+    true_data: IterationData,
 ):
     fig, axes = plt.subplots(3, 1, figsize=(8, 12), sharex=True)
     ax1: Axes = axes[0]
     ax2: Axes = axes[1]
     ax3: Axes = axes[2]
 
-    for method, records in data.items():
-        true_values = true_data[method]
-
-        ax1.plot(
-            records["time"], get_differences(records["height"], true_values["height"])
-        )
+    for records in data.values():
+        ax1.plot(records["time"], sub_list(records["height"], true_data["height"]))
         ax2.plot(
             records["time"],
-            get_differences(records["velocity"], true_values["velocity"]),
+            sub_list(records["velocity"], true_data["velocity"]),
         )
         ax3.plot(
             records["time"],
-            get_differences(records["acceleration"], true_values["acceleration"]),
+            sub_list(records["acceleration"], true_data["acceleration"]),
         )
 
     ax1.set_ylabel("Height Difference ($m$)")
@@ -98,23 +115,48 @@ def plot_differences(
     fig.show()
 
 
-def get_differences(list1: list[float], list2: list[float]):
-    assert len(list1) == len(list2)
-    return [item1 - list2[i] for i, item1 in enumerate(list1)]
+def sub_list(list1: list[float], list2: list[float]):
+    return [item1 - item2 for item1, item2 in zip(list1, list2)]
 
 
 def get_acceleration(velocity: float, height: float):
-    gravitational_constant = 9.81
-
-    return get_drag(velocity, height) - gravitational_constant
+    return gravitational_constant + get_drag(velocity, height)
 
 
 def get_drag(velocity: float, height: float):
-    drag_coefficient = 0.6
-    air_density = lambda height: 1.2 * np.e ** (-height / 10400)
+    air_density = lambda _: 1
     area = 1
-    mass = 100
 
     return -(
         drag_coefficient * air_density(height) * area * abs(velocity) * velocity
     ) / (2 * mass)
+
+
+def get_analytical_acceleration(time_steps: list[float]):
+    return [gravitational_constant] * len(time_steps)
+
+
+def get_analytical_velocity(time_steps: list[float]):
+    direction = gravitational_constant / abs(gravitational_constant)
+    return [
+        direction
+        * (mass * abs(gravitational_constant) / drag_coefficient) ** 0.5
+        * np.tanh((drag_coefficient * abs(gravitational_constant) / mass) ** 0.5 * time)
+        for time in time_steps
+    ]
+
+
+def get_analytical_height(initial_height: float, time_steps: list[float]):
+    direction = gravitational_constant / abs(gravitational_constant)
+    return [
+        initial_height
+        + (
+            direction
+            * (mass / (2 * drag_coefficient))
+            * np.log(
+                np.cosh((drag_coefficient * gravitational_constant / mass**0.5 * time))
+                ** 2
+            )
+        )
+        for time in time_steps
+    ]
