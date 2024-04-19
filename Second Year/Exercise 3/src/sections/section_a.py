@@ -1,11 +1,10 @@
-import numpy as np
 from helpers import (
     get_comma_separated_string,
     input_float,
     input_positive_float,
     plot_fall,
 )
-from helpers import MethodString, IterationData, iterate
+from helpers import MethodString, iterate, get_acceleration, get_fixed_air_density
 
 
 def run():
@@ -25,7 +24,7 @@ def run():
         choice = input(
             f"""
 Select one of the following options:
-'r': To run the {get_comma_separated_string(methods)} methods with the parameters:
+'r': To run the {get_comma_separated_string(method.value for method in methods)} methods with the parameters:
     initial height: {initial_height}s
     initial vertical velocity: {initial_velocity}m/s
     time step: {time_step}s
@@ -45,6 +44,7 @@ Select one of the following options:
                             initial_height,
                             initial_velocity,
                             get_acceleration,
+                            get_fixed_air_density,
                             method.to_method(),
                             time_step,
                         )
@@ -66,20 +66,3 @@ Select one of the following options:
 
             case _:
                 print("\nThis is not a valid choice")
-
-
-def get_acceleration(velocity: float, height: float):
-    gravitational_constant = 9.81
-
-    return get_drag(velocity, height) - gravitational_constant
-
-
-def get_drag(velocity: float, height: float):
-    drag_coefficient = 0.6
-    air_density = lambda height: 1.2 * np.e ** (-height / 10400)
-    area = 1
-    mass = 100
-
-    return -(
-        drag_coefficient * air_density(height) * area * abs(velocity) * velocity
-    ) / (2 * mass)
