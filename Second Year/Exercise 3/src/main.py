@@ -2,8 +2,8 @@ from sections import (
     run_section_a,
     run_section_b,
     # run_section_c,
-    # run_section_d,
-    # run_section_e,
+    run_section_d,
+    run_section_e,
     # run_section_f,
 )
 
@@ -29,10 +29,10 @@ while True:
             run_section_b()
         # case "c":
         #     run_section_c()
-        # case "d":
-        #     run_section_d()
-        # case "e":
-        #     run_section_e()
+        case "d":
+            run_section_d()
+        case "e":
+            run_section_e()
         # case "f":
         #     run_section_f()
         case "q":
