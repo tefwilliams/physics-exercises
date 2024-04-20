@@ -1,2 +1,12 @@
-__pycache__
+# Logs
+data
+
+# Virtual Environment
 .venv
+
+# Python Caches
+**/__pycache__
+.pytest_cache
+
+# Python Pacakge Data
+*.egg-info

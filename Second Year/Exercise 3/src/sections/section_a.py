@@ -1,10 +1,15 @@
-from helpers import (
+from physics_exercise_helpers import (
     get_comma_separated_string,
     input_float,
     input_positive_float,
+)
+from helpers import (
+    iterate,
+    get_acceleration,
+    get_fixed_air_density,
+    MethodString,
     plot_fall,
 )
-from helpers import MethodString, iterate, get_acceleration, get_fixed_air_density
 
 
 def run():

@@ -1,4 +1,5 @@
-from helpers import input_float, input_positive_int, simpson_integrate, mysin, mycos
+from physics_exercise_helpers import input_float, input_positive_int
+from helpers import simpson_integrate, mysin, mycos
 
 
 def run():

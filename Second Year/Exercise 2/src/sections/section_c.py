@@ -1,7 +1,8 @@
+import numpy as np
 from time import time
 from matplotlib import pyplot as plt
-import numpy as np
-from helpers import input_float, input_positive_int, simpson_integrate, mysin, mycos
+from physics_exercise_helpers import input_float, input_positive_int
+from helpers import simpson_integrate, mysin, mycos
 
 
 def plot_intensity(

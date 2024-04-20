@@ -1,0 +1,9 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "physics_exercise_helpers"
+version = "0.0.1"
+requires-python = ">=3.10"
+readme = "README.md"

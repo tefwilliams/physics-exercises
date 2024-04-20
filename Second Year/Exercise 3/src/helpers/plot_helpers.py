@@ -1,7 +1,6 @@
+import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.axes import Axes
-
-from .list_helpers import differences
 from .methods import IterationData
 
 
@@ -35,14 +34,14 @@ def plot_differences(
     ax3: Axes = axes[2]
 
     for records in data.values():
-        ax1.plot(records["time"], differences(records["height"], true_data["height"]))
+        ax1.plot(records["time"], np.subtract(records["height"], true_data["height"]))
         ax2.plot(
             records["time"],
-            differences(records["velocity"], true_data["velocity"]),
+            np.subtract(records["velocity"], true_data["velocity"]),
         )
         ax3.plot(
             records["time"],
-            differences(records["acceleration"], true_data["acceleration"]),
+            np.subtract(records["acceleration"], true_data["acceleration"]),
         )
 
     ax1.set_ylabel("Height Difference ($m$)")

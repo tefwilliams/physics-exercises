@@ -1,7 +1,8 @@
 import numpy as np
-from matplotlib import pyplot as plt
 from scipy import integrate
-from helpers import get_1d_function, input_float, input_positive_int, simpson_integrate
+from matplotlib import pyplot as plt
+from physics_exercise_helpers import input_float, input_positive_int, get_1d_function
+from helpers import simpson_integrate
 
 
 def run():

@@ -1,4 +1,5 @@
-from helpers import input_float, input_positive_int, simpson_integrate, get_1d_function
+from physics_exercise_helpers import input_float, input_positive_int, get_1d_function
+from helpers import simpson_integrate
 
 
 def run():

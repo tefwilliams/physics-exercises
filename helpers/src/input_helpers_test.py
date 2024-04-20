@@ -1,5 +1,5 @@
 import builtins
-from helpers import input_int, input_float
+from .physics_exercise_helpers.input_helpers import input_int, input_float
 
 # input_int
 
