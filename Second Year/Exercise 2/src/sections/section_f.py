@@ -97,7 +97,7 @@ def run():
                 )
                 z = input_float("Enter a value for the z coordinate (in mm): ") * 10**-3
                 number_of_points = input_positive_int(
-                    "Enter a value for the number of steps: "
+                    "Enter a value for the number of points: "
                 )
                 number_of_steps = input_positive_int(
                     "Enter a value for the number of steps: "

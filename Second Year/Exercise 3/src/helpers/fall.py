@@ -25,7 +25,7 @@ def run_fall(air_density: Callable[[float], float]):
             f"""
 Select one of the following options:
 'r': To run the {get_comma_separated_string(method.value for method in methods)} methods with the parameters:
-    initial height: {initial_height}s
+    initial height: {initial_height}m
     initial vertical velocity: {initial_velocity}m/s
     time step: {time_step}s
 'm': To modify the parameters
